@@ -77,6 +77,8 @@ function clearTime(field){
 		findTagsByName("span", field)[0].textContent = timeToString(0);
 }
 
+
+
 function addTask(field, parentNode){
 		tasknumber++;
 		var name = "task" + tasknumber;
@@ -153,7 +155,7 @@ function outputText(textNode, format){
 
 
 		var timeLimit = parseInt(document.getElementsByName("setTimeLimit")[0].value);
-		if(isNaN(timeLimit){
+		if(isNaN(timeLimit)){
 						timeLimit = DEFAULT_TIME_LIMIT;
 						}
 						var otherTime = totalTime - timeLimit;
@@ -171,3 +173,4 @@ function outputText(textNode, format){
 						}
 
 
+window.onload = function(){ addTask('task0', findTagsByID('div', 'tasklist')[0] ) };
