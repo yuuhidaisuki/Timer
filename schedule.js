@@ -119,9 +119,6 @@ function makeSpan(name, innerHTML){
 }
 
 
-/*
-   日報用のアウトプット
- */
 function outputText(textNode, format){
 		var outText = "";
 		var totalTime = 0;
@@ -153,24 +150,25 @@ function outputText(textNode, format){
 				}
 		}
 
+		var temp_timeLimit = /^[0-9]+:[0-9]{1,2}:[0-9]{1,2}$/.test(document.getElementsByName("setTimeLimit")[0].value);
+		var timeLimit = 7 * 60 * 60 + 30 * 60;
+		if(temp_timeLimit){	
+			var temp = document.getElementsByName("setTimeLimit")[0].value.split(":");
+			timeLimit = parseInt(temp[0]) * 60 * 60 + parseInt(temp[1]) * 60 + parseInt(temp[2]);
+		}
+		var otherTime = timeLimit - totalTime;
 
-		var timeLimit = parseInt(document.getElementsByName("setTimeLimit")[0].value);
-		if(isNaN(timeLimit)){
-						timeLimit = DEFAULT_TIME_LIMIT;
-						}
-						var otherTime = totalTime - timeLimit;
 
+		textNode.innerHTML = outText;
 
-						textNode.innerHTML = outText;
-
-						if(format === "plane"){
-						textNode.innerHTML += "Total:" + timeToString(totalTime) + "<br>";
-						textNode.innerHTML += "Other:" + timeToString(otherTime) + "<br>";
-						}else if(format === "csv"){
-						textNode.innerHTML += "Total," + timeToString(totalTime) + "<br>";
-						textNode.innerHTML += "Other," + timeToString(otherTime) + "<br>";
-						}
-						}
+		if(format === "plane"){
+				textNode.innerHTML += "Total:" + timeToString(totalTime) + "<br>";
+				textNode.innerHTML += "Other:" + timeToString(otherTime) + "<br>";
+		}else if(format === "csv"){
+				textNode.innerHTML += "Total," + timeToString(totalTime) + "<br>";
+				textNode.innerHTML += "Other," + timeToString(otherTime) + "<br>";
+		}
+}
 
 
 window.onload = function(){ addTask('task0', findTagsByID('div', 'tasklist')[0] ) };
